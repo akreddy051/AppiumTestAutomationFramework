@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="org.example.testUtils.Listeners"></listener>
+    </listeners>
+    <test name="Ecommerce end to end test">
+        <classes>
+            <class name="org.example.androidTests.EcommerceTestAndroid4Hybrid">
+            </class>
+        </classes>
+    </test>
+<!--    <test name="Toast Message validations">-->
+<!--        <classes>-->
+<!--            <class name="org.example.androidTests.ToastMessageValidation">-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
+</suite>
