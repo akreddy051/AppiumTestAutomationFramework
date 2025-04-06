@@ -10,10 +10,10 @@
             </class>
         </classes>
     </test>
-<!--    <test name="Toast Message validations">-->
-<!--        <classes>-->
-<!--            <class name="org.example.androidTests.ToastMessageValidation">-->
-<!--            </class>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Toast Message validations">
+        <classes>
+            <class name="org.example.androidTests.ToastMessageValidation">
+            </class>
+        </classes>
+    </test>
 </suite>

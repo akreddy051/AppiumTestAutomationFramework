@@ -24,7 +24,7 @@ public class ToastMessageValidation extends BaseTestAndroid {
         formPage.selectCountry("Australia");
         formPage.submitForm();
         String toastMessage = formPage.getToastMessage();
-        Assert.assertEquals(toastMessage,"Please enter your name");
+        Assert.assertEquals(toastMessage,"Please ente your name");
     }
 
     @Test

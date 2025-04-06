@@ -12,6 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <executionType>local</executionType>
+        <executionArgLine></executionArgLine>
     </properties>
 
     <dependencies>
@@ -45,11 +47,45 @@
             <artifactId>extentreports</artifactId>
             <version>5.1.2</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.browserstack/browserstack-java-sdk -->
+        <dependency>
+            <groupId>com.browserstack</groupId>
+            <artifactId>browserstack-java-sdk</artifactId>
+            <version>1.30.9</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
     <profiles>
+        <!-- Dynamic ArgLine Injection Based on Execution Type -->
+        <profile>
+            <id>argline-cloud</id>
+            <activation>
+                <property>
+                    <name>executionType</name>
+                    <value>cloud</value>
+                </property>
+            </activation>
+            <properties>
+                <executionArgLine>-javaagent:/Users/asingadiwar/.m2/repository/com/browserstack/browserstack-java-sdk/1.30.9/browserstack-java-sdk-1.30.9.jar</executionArgLine>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>argline-local</id>
+            <activation>
+                <property>
+                    <name>executionType</name>
+                    <value>local</value>
+                </property>
+            </activation>
+            <properties>
+                <executionArgLine></executionArgLine>
+            </properties>
+        </profile>
+
+        <!-- Android Regression -->
         <profile>
             <id>Android-Regression</id>
             <activation>
@@ -65,11 +101,17 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>testSuites/testngAndroid.xml</suiteXmlFile>
                             </suiteXmlFiles>
+                            <argLine>${executionArgLine}</argLine>
+                            <systemPropertyVariables>
+                                <executionType>${executionType}</executionType>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
+        <!-- Android Smoke -->
         <profile>
             <id>Android-Smoke</id>
             <activation>
@@ -85,11 +127,16 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>testSuites/smokeTestngAndroid.xml</suiteXmlFile>
                             </suiteXmlFiles>
-                        </configuration>
+                            <argLine>${executionArgLine}</argLine>
+                            <systemPropertyVariables>
+                                <executionType>${executionType}</executionType>
+                            </systemPropertyVariables>                        </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
+        <!-- iOS Regression -->
         <profile>
             <id>IOS-Regression</id>
             <activation>
@@ -105,6 +152,10 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>testSuites/testngIOS.xml</suiteXmlFile>
                             </suiteXmlFiles>
+                            <argLine>${executionArgLine}</argLine>
+                            <systemPropertyVariables>
+                                <executionType>${executionType}</executionType>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>

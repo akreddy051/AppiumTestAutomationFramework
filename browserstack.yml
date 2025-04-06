@@ -1,0 +1,22 @@
+#server: https://hub.browserstack.com/wd/hub
+userName: akshayreddy_EiAhls
+accessKey: qMcCkyzMpLkP5uVDEd8A
+framework: testng
+app: bs://089faabece722be7758f5a4f93b3ae6694679a5a
+platforms:
+#  - platformName: android
+#    deviceName: Samsung Galaxy S22 Ultra
+#    platformVersion: 12.0
+  - platformName: android
+    deviceName: Samsung Galaxy A51
+    platformVersion: 10.0
+#    appPackage: com.androidsample.generalstore
+#    appActivity: com.androidsample.generalstore.MainActivity
+#  - platformName: android
+#    deviceName: OnePlus 9
+#    platformVersion: 11.0
+#browserstackLocal: true
+buildName: General-Store-App
+projectName: General Store App
+debug: true
+networkLogs: true
