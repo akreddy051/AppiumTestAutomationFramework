@@ -5,16 +5,19 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 public class ExtentReporterNG {
 
-    public static ExtentReports getExtentReporterObject(){
-        String path = System.getProperty("user.dir")+"/reports/extentReports/index.html";
-        ExtentSparkReporter reporter = new ExtentSparkReporter(path);
-        reporter.config().setReportName("BHIM Automation Results");
-        reporter.config().setDocumentTitle("BHIM Test Results");
+    private static ExtentReports extentReports; // Singleton instance
 
-        ExtentReports extentReports = new ExtentReports();
-        extentReports.attachReporter(reporter);
-        extentReports.setSystemInfo("tester","Akshay Reddy");
+    public static ExtentReports getExtentReporterObject() {
+        if (extentReports == null) {
+            String path = System.getProperty("user.dir") + "/reports/extentReports/index.html";
+            ExtentSparkReporter reporter = new ExtentSparkReporter(path);
+            reporter.config().setReportName("BHIM Automation Results");
+            reporter.config().setDocumentTitle("BHIM Test Results");
+
+            extentReports = new ExtentReports();
+            extentReports.attachReporter(reporter);
+            extentReports.setSystemInfo("Tester", "Akshay Reddy");
+        }
         return extentReports;
     }
-
 }

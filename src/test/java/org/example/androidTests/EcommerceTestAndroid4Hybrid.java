@@ -1,6 +1,7 @@
 package org.example.androidTests;
 
 import com.google.common.collect.ImmutableMap;
+import io.appium.java_client.android.AndroidDriver;
 import org.example.pageObjects.android.CartPage;
 import org.example.pageObjects.android.FormPage;
 import org.example.pageObjects.android.ProductsPage;
@@ -20,7 +21,7 @@ public class EcommerceTestAndroid4Hybrid extends BaseTestAndroid {
 
     @BeforeMethod(alwaysRun = true)
     public void setHomePage() throws InterruptedException {
-        driver.executeScript("mobile: startActivity", ImmutableMap.of(
+        getDriver().executeScript("mobile: startActivity", ImmutableMap.of(
                 "intent","com.androidsample.generalstore/com.androidsample.generalstore.MainActivity"
         ));
         Thread.sleep(3000);
@@ -29,19 +30,19 @@ public class EcommerceTestAndroid4Hybrid extends BaseTestAndroid {
     @Test(dataProvider = "jsonFileDataProvider")
     public void validatingTotalAmount(Map<String,String> input) throws InterruptedException {
         //Login page steps
-        FormPage formPage = new FormPage(driver);
+        FormPage formPage = new FormPage((AndroidDriver) getDriver());
         formPage.setNameField(input.get("name"));
         formPage.selectGender(input.get("gender"));
         formPage.selectCountry(input.get("country"));
         formPage.submitForm();
 
-        ProductsPage productsPage = new ProductsPage(driver);
+        ProductsPage productsPage = new ProductsPage((AndroidDriver) getDriver());
         //Selecting products and clicking on the cart icon
         String[] productsToShop = {"Converse All Star","Air Jordan 9 Retro"};
         productsPage.addProductsToCart(productsToShop);
         productsPage.navigateToCart();
 
-        CartPage cartPage = new CartPage(driver);
+        CartPage cartPage = new CartPage((AndroidDriver) getDriver());
         double sumOfAllProducts = cartPage.getSumOfAllProducts();
         double totalPriceDisplayed = cartPage.getTotalPriceDisplayed();
         Assert.assertEquals(sumOfAllProducts,totalPriceDisplayed);

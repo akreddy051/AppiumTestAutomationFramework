@@ -14,27 +14,27 @@ import org.testng.ITestResult;
 
 public class Listeners extends AppiumActions implements ITestListener {
     AppiumDriver driver;
-    ExtentTest extentTest;
+    private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
     ExtentReports extent = ExtentReporterNG.getExtentReporterObject();
     @Override
     public void onTestStart(ITestResult result) {
-        extentTest = extent.createTest(result.getMethod().getMethodName());
+        extentTest.set(extent.createTest(result.getMethod().getMethodName()));
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         driver = fetchDriver(result);
-        extentTest.log(Status.PASS,"The test has passed");
+        extentTest.get().log(Status.PASS,"The test has passed");
         logExecutionLink(driver);
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        extentTest.log(Status.FAIL,result.getThrowable());
+        extentTest.get().log(Status.FAIL,result.getThrowable());
         driver = fetchDriver(result);
         try {
             String screenShotPath = captureScreenShot(driver,result.getMethod().getMethodName());
-            extentTest.addScreenCaptureFromPath(screenShotPath);
+            extentTest.get().addScreenCaptureFromPath(screenShotPath);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -43,6 +43,7 @@ public class Listeners extends AppiumActions implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
+        extentTest.get().log(Status.SKIP, "Test skipped: " + result.getThrowable());
     }
 
     @Override
@@ -51,6 +52,7 @@ public class Listeners extends AppiumActions implements ITestListener {
 
     @Override
     public void onTestFailedWithTimeout(ITestResult result) {
+        extentTest.get().log(Status.SKIP, "Test Timed out: " + result.getThrowable());
     }
 
     @Override
@@ -68,16 +70,19 @@ public class Listeners extends AppiumActions implements ITestListener {
         String link = "<a href='https://app-automate.browserstack.com/dashboard/v2/builds/"+buildId+"/sessions/"+sessionId+"' target='_blank'>Test Execution Link</a>";
         Markup m = MarkupHelper.createLabel(link, ExtentColor.BLACK);
         if(System.getProperty("executionType").equals("local")){
-            extentTest.log(Status.INFO, "This test got executed locally");
+            extentTest.get().log(Status.INFO, "This test got executed locally");
         }else{
-            extentTest.log(Status.INFO, m);
+            extentTest.get().log(Status.INFO, m);
         }
     }
 
     public AppiumDriver fetchDriver(ITestResult result){
         AppiumDriver appiumDriver;
         try {
-            appiumDriver = (AppiumDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
+            appiumDriver = (AppiumDriver) result.getInstance()
+                    .getClass()
+                    .getMethod("getDriver")
+                    .invoke(result.getInstance());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

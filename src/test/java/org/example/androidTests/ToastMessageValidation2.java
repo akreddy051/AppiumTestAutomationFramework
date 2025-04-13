@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class ToastMessageValidation extends BaseTestAndroid {
+public class ToastMessageValidation2 extends BaseTestAndroid {
 
     @BeforeMethod(alwaysRun = true)
     public void setHomePage() throws InterruptedException {

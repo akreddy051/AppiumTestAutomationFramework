@@ -1,0 +1,23 @@
+<suite name="AndroidParallel" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="org.example.testUtils.Listeners"></listener>
+    </listeners>
+    <test name="Device1">
+        <parameter name="deviceName" value="MyPixel9"/>
+        <parameter name="udid" value="emulator-5554"/>
+        <parameter name="systemPort" value="8200"/>
+        <parameter name="appiumPort" value="4723"/>
+        <classes>
+            <class name="org.example.androidTests.EcommerceTestAndroid4Hybrid"/>
+        </classes>
+    </test>
+    <test name="Device2">
+        <parameter name="deviceName" value="OnePlus CPH2661"/>
+        <parameter name="udid" value="fe2d7a1"/>
+        <parameter name="systemPort" value="8201"/>
+        <parameter name="appiumPort" value="4725"/>
+        <classes>
+            <class name="org.example.androidTests.ToastMessageValidation"/>
+        </classes>
+    </test>
+</suite>

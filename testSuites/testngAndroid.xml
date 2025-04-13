@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
+<suite name="All Test Suite" parallel="tests" thread-count="2">
     <listeners>
         <listener class-name="org.example.testUtils.Listeners"></listener>
     </listeners>
@@ -13,6 +13,12 @@
     <test name="Toast Message validations">
         <classes>
             <class name="org.example.androidTests.ToastMessageValidation">
+            </class>
+        </classes>
+    </test>
+    <test name="Toast Message validations 2">
+        <classes>
+            <class name="org.example.androidTests.ToastMessageValidation2">
             </class>
         </classes>
     </test>

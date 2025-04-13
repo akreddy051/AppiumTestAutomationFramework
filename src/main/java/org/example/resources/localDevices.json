@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Device1",
+    "deviceName": "MyPixel9",
+    "udid": "emulator-5554",
+    "systemPort": "8200",
+    "appiumPort": "4723"
+  },
+  {
+    "name": "Device2",
+    "deviceName": "OnePlus CPH2661",
+    "udid": "fe2d7a1",
+    "systemPort": "8201",
+    "appiumPort": "4725"
+  }
+]
